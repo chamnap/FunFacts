@@ -13,6 +13,8 @@ import java.util.Random;
 
 public class FunFactsActivity extends AppCompatActivity {
     public static final String TAG = FunFactsActivity.class.getSimpleName();
+    private static final String KEY_FACT = "KEY_FACT";
+    private static final String KEY_COLOR = "KEY_COLOR";
     private FactBook mFactBook = new FactBook();
     private ColorWheel mColorWeel = new ColorWheel();
 
@@ -20,6 +22,8 @@ public class FunFactsActivity extends AppCompatActivity {
     private TextView mFactTextView;
     private Button mShowFactButton;
     private RelativeLayout mRelativeLayout;
+    private String mFact = mFactBook.mFacts[0];
+    private int mColor = Color.parseColor(mColorWeel.mColors[0]);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +38,38 @@ public class FunFactsActivity extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int color = mColorWeel.getColor();
+                mFact = mFactBook.getFact();
+                mColor = mColorWeel.getColor();
 
                 // Update the screen with our dynamic fact
-                mFactTextView.setText(mFactBook.getFact());
-                mRelativeLayout.setBackgroundColor(color);
-                mShowFactButton.setTextColor(color);
+                mFactTextView.setText(mFact);
+                mRelativeLayout.setBackgroundColor(mColor);
+                mShowFactButton.setTextColor(mColor);
 
                 // Show Toast
                 Toast.makeText(FunFactsActivity.this, "Yay!", Toast.LENGTH_LONG).show();
             }
         };
         mShowFactButton.setOnClickListener(listener);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(KEY_FACT, mFact);
+        outState.putInt(KEY_COLOR, mColor);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        mFact = savedInstanceState.getString(KEY_FACT);
+        mFactTextView.setText(mFact);
+
+        mColor = savedInstanceState.getInt(KEY_COLOR);
+        mRelativeLayout.setBackgroundColor(mColor);
+        mShowFactButton.setTextColor(mColor);
     }
 }

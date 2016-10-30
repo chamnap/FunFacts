@@ -10,7 +10,8 @@ import java.util.Random;
 
 public class ColorWheel {
     // Fields (Member Variables) - Properties about the objects
-    private String[] mColors = {
+    String[] mColors = {
+            "#51b46d", // green
             "#39add1", // light blue
             "#3079ab", // dark blue
             "#c25975", // mauve
@@ -19,7 +20,6 @@ public class ColorWheel {
             "#838cc7", // lavender
             "#7d669e", // purple
             "#53bbb4", // aqua
-            "#51b46d", // green
             "#e0ab18", // mustard
             "#637a91", // dark gray
             "#f092b0", // pink
